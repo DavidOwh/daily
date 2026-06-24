@@ -39,6 +39,30 @@ body{
   padding:18px 20px 16px;
   text-align:center;
 }
+/* date navigator row */
+.date-nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  margin-bottom:4px;
+}
+.date-nav-btn{
+  background:rgba(255,255,255,.18);
+  border:2px solid rgba(255,255,255,.40);
+  color:white;
+  border-radius:999px;
+  width:46px;height:46px;
+  font-size:26px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  line-height:1;
+}
+.date-nav-btn:active{background:rgba(255,255,255,.30)}
+.date-nav-btn:disabled{opacity:.35;cursor:default}
 .morning-date{
   font-size:17px;
   color:rgba(255,255,255,.75);
@@ -102,35 +126,7 @@ body{
   font-size:14px;
   color:#7a5a00;
 }
-.streak-dots{
-  display:flex;
-  gap:7px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-.dot{
-  width:28px;height:28px;
-  border-radius:50%;
-  background:#e8dfc8;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:13px;
-  font-weight:700;
-  color:#aaa;
-  border:2px solid #ddd;
-}
-.dot.done{
-  background:#2f6b35;
-  color:white;
-  border-color:#2f6b35;
-  font-size:16px;
-}
-.dot.today-empty{
-  background:#fff;
-  border:2px dashed #d4a017;
-  color:#d4a017;
-}
+
 .checkin-btn{
   background:#d4a017;
   color:#1a1a00;
@@ -262,65 +258,17 @@ main{
 }
 .arrow{color:#d4a017;font-size:26px}
 
-/* ── CARDS CAROUSEL ── */
-.cards-wrap{
-  position:relative;
-}
+/* ── CARDS ── */
+.cards-wrap{position:relative}
 .cards{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:18px;
 }
-/* carousel dots */
-.carousel-dots{
-  display:none;
-  justify-content:center;
-  gap:8px;
-  margin-top:16px;
-}
-.c-dot{
-  width:10px;height:10px;
-  border-radius:50%;
-  background:#ccc;
-  cursor:pointer;
-  transition:background .2s;
-}
-.c-dot.active{background:#123c5c}
-/* carousel arrows */
-.car-btn{
-  display:none;
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  background:#123c5c;
-  color:white;
-  border:none;
-  border-radius:50%;
-  width:44px;height:44px;
-  font-size:22px;
-  cursor:pointer;
-  z-index:10;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 4px 14px rgba(0,0,0,.22);
-  line-height:1;
-}
-.car-btn.left{left:-18px}
-.car-btn.right{right:-18px}
 @media(max-width:900px){
   .cards{
-    display:flex;
-    overflow:hidden;
-    gap:0;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
+    grid-template-columns:1fr;
   }
-  .card{
-    flex:0 0 100%;
-    scroll-snap-align:start;
-  }
-  .carousel-dots{display:flex}
-  .car-btn{display:flex}
 }
 .card{
   border-radius:25px;
@@ -625,7 +573,11 @@ footer{
 
   <!-- MORNING BANNER: date + greeting + daily verse -->
   <div class="morning-banner">
-    <div class="morning-date" id="today-date"></div>
+    <div class="date-nav">
+      <button class="date-nav-btn" id="btn-prev" onclick="dateMove(-1)" aria-label="前一天">&#8249;</button>
+      <div class="morning-date" id="today-date"></div>
+      <button class="date-nav-btn" id="btn-next" onclick="dateMove(1)" aria-label="后一天">&#8250;</button>
+    </div>
     <div class="morning-greeting" id="morning-greeting"></div>
     <div class="daily-verse-box">
       <div class="daily-verse-text" id="verse-text"></div>
@@ -642,7 +594,6 @@ footer{
         <div class="streak-label">连续灵修</div>
       </div>
     </div>
-    <div class="streak-dots" id="streak-dots"></div>
     <div>
       <button class="checkin-btn" id="checkin-btn" onclick="doCheckin()">✅ 今天完成了</button>
       <div class="streak-done-msg" id="streak-done-msg">今天已记录 🎉</div>
@@ -679,8 +630,6 @@ footer{
       </div>
 
       <div class="cards-wrap">
-      <button class="car-btn left" onclick="carMove(-1)" aria-label="上一个">&#8249;</button>
-      <button class="car-btn right" onclick="carMove(1)" aria-label="下一个">&#8250;</button>
       <div class="cards" id="cards-track">
         <article class="card green" id="card-1">
           <div class="visited-badge">✓ 今天已打开</div>
@@ -733,11 +682,6 @@ footer{
           <div class="tip">第三步：长期扎根神的话</div>
         </article>
       </div><!-- end .cards -->
-      <div class="carousel-dots">
-        <div class="c-dot active" onclick="carGoTo(0)"></div>
-        <div class="c-dot" onclick="carGoTo(1)"></div>
-        <div class="c-dot" onclick="carGoTo(2)"></div>
-      </div>
     </div><!-- end .cards-wrap -->
     </section>
 
@@ -824,6 +768,48 @@ footer{
 
 <script>
 /* ══════════════════════════════════════
+   DATE NAVIGATOR — defined first so onclick works
+══════════════════════════════════════ */
+var dateOffset = 0;   // 0 = today, -1 = yesterday, +1 = tomorrow, max +1
+
+function dateMove(dir){
+  dateOffset = dateOffset + dir;
+  renderDateBanner();
+}
+
+function renderDateBanner(){
+  var now = new Date();
+  now.setDate(now.getDate() + dateOffset);
+
+  var dow  = now.getDay();
+  var d    = now.getDate();
+  var mo   = CN_MONTHS[now.getMonth()];
+  var yr   = now.getFullYear();
+
+  // Date label
+  // Show 今天 badge when not on today
+  var label = yr + "年" + mo + d + "日   " + CN_DAYS[dow];
+  if(dateOffset !== 0) label += "  （点此回今天）";
+  var dateEl = document.getElementById('today-date');
+  dateEl.textContent = label;
+  dateEl.onclick = dateOffset !== 0 ? function(){ dateOffset=0; renderDateBanner(); } : null;
+  dateEl.style.cursor = dateOffset !== 0 ? 'pointer' : 'default';
+  dateEl.style.textDecoration = dateOffset !== 0 ? 'underline' : 'none';
+
+  // Greeting
+  document.getElementById('morning-greeting').textContent = GREETINGS[dow];
+
+  // Verse
+  var v = VERSES[dow];
+  document.getElementById('verse-text').textContent = v.text;
+  document.getElementById('verse-ref').textContent  = "—— " + v.ref;
+  document.getElementById('bq-text').textContent    = v.text;
+  document.getElementById('bq-ref').textContent     = "—— " + v.ref;
+
+
+}
+
+/* ══════════════════════════════════════
    DATA: 7 daily verses (Sunday=0 … Saturday=6)
 ══════════════════════════════════════ */
 var VERSES = [
@@ -853,25 +839,8 @@ var CN_MONTHS = ["一月","二月","三月","四月","五月","六月","七月",
    INIT: date, verse, streak on load
 ══════════════════════════════════════ */
 (function init(){
-  var now = new Date();
-  var dow = now.getDay();      // 0=Sun
-  var d   = now.getDate();
-  var mo  = CN_MONTHS[now.getMonth()];
-  var yr  = now.getFullYear();
-
-  // Date string
-  document.getElementById('today-date').textContent =
-    yr + "年" + mo + d + "日   " + CN_DAYS[dow];
-
-  // Greeting
-  document.getElementById('morning-greeting').textContent = GREETINGS[dow];
-
-  // Daily verse — same verse all day, rotates by day-of-week
-  var v = VERSES[dow];
-  document.getElementById('verse-text').textContent = v.text;
-  document.getElementById('verse-ref').textContent  = "—— " + v.ref;
-  document.getElementById('bq-text').textContent    = v.text;
-  document.getElementById('bq-ref').textContent     = "—— " + v.ref;
+  // Render today's date/verse/greeting
+  renderDateBanner();
 
   // WhatsApp share link
   var pageUrl = "https://daily.davidowh.com";
@@ -950,23 +919,7 @@ function renderStreak(data){
     done.style.display = 'none';
   }
 
-  // 7-dot history
-  var dotsEl = document.getElementById('streak-dots');
-  dotsEl.innerHTML = '';
-  var history = data.history || [];
 
-  // build last 7 days
-  for(var i=6; i>=0; i--){
-    var d2  = new Date();
-    d2.setDate(d2.getDate()-i);
-    var key2 = d2.getFullYear()+'-'+(d2.getMonth()+1)+'-'+d2.getDate();
-    var isToday   = (key2 === today);
-    var wasDone   = (history.indexOf(key2) !== -1);
-    var dot = document.createElement('div');
-    dot.className = 'dot' + (wasDone ? ' done' : (isToday ? ' today-empty' : ''));
-    dot.textContent = wasDone ? '✓' : (isToday ? '今' : CN_DAYS[d2.getDay()].replace('星期',''));
-    dotsEl.appendChild(dot);
-  }
 }
 
 /* ══════════════════════════════════════
