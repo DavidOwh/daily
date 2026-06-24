@@ -53,9 +53,9 @@ body{
   border:2px solid rgba(255,255,255,.40);
   color:white;
   border-radius:999px;
-  width:40px;height:40px;
-  min-width:40px;
-  font-size:24px;
+  width:48px;height:48px;
+  min-width:48px;
+  font-size:26px;
   cursor:pointer;
   display:flex;
   align-items:center;
@@ -296,9 +296,9 @@ main{
   top:14px;right:14px;
   background:#2f6b35;
   color:white;
-  font-size:13px;
+  font-size:15px;
   font-weight:900;
-  padding:4px 12px;
+  padding:5px 14px;
   border-radius:999px;
 }
 .card.visited .visited-badge{display:block}
@@ -355,7 +355,7 @@ main{
   background:rgba(212,160,23,.12);
   border:1px solid rgba(212,160,23,.22);
   color:#4b3a12;
-  font-size:15px;
+  font-size:17px;
 }
 .btn{
   display:flex;
@@ -379,7 +379,7 @@ main{
   margin-top:10px;
   text-align:center;
   color:#5b6470;
-  font-size:14px;
+  font-size:17px;
 }
 
 /* ── TWO COL ── */
@@ -405,6 +405,7 @@ blockquote{
   font-size:22px;
   font-weight:800;
 }
+blockquote small{font-size:18px}
 
 /* ── FAQ ── */
 .faq details{
@@ -974,7 +975,11 @@ function openTool(url, title, cardNum){
 
   var frame = document.getElementById('tool-frame');
   frame.src = '';
+  var loadTimer = setTimeout(function(){
+    document.getElementById('loading-wrap').classList.remove('show');
+  }, 6000);
   frame.onload = function(){
+    clearTimeout(loadTimer);
     document.getElementById('loading-wrap').classList.remove('show');
   };
   frame.src = url;
