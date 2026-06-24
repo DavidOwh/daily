@@ -975,11 +975,7 @@ function openTool(url, title, cardNum){
 
   var frame = document.getElementById('tool-frame');
   frame.src = '';
-  var loadTimer = setTimeout(function(){
-    document.getElementById('loading-wrap').classList.remove('show');
-  }, 6000);
   frame.onload = function(){
-    clearTimeout(loadTimer);
     document.getElementById('loading-wrap').classList.remove('show');
   };
   frame.src = url;
