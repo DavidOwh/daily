@@ -796,6 +796,10 @@ function renderDateBanner(){
   dateEl.style.cursor = dateOffset !== 0 ? 'pointer' : 'default';
   dateEl.style.textDecoration = dateOffset !== 0 ? 'underline' : 'none';
 
+  // Show streak bar only when viewing today
+  var streakBar = document.querySelector('.streak-bar');
+  if(streakBar) streakBar.style.display = (dateOffset === 0) ? '' : 'none';
+
   // Greeting
   document.getElementById('morning-greeting').textContent = GREETINGS[dow];
 
@@ -974,12 +978,4 @@ function openTool(url, title, cardNum){
 function goHome(){
   document.getElementById('tool-view').style.display = 'none';
   document.getElementById('tool-frame').src = '';
-  document.getElementById('loading-wrap').classList.remove('show');
-  document.getElementById('home-view').style.display = 'block';
-  window.scrollTo(0,0);
-  loadVisited(); // refresh visited badges
-}
-</script>
-
-</body>
-</html>
+  document.getElementById('loading-wrap').classLi
