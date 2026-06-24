@@ -474,6 +474,7 @@ footer{
   font-size:16px;
 }
 
+
 /* ══════════════════════════
    TOOL VIEW
 ══════════════════════════ */
@@ -963,21 +964,9 @@ loadVisited();
    OPEN / CLOSE TOOL
 ══════════════════════════════════════ */
 function openTool(url, title, cardNum){
-  window.scrollTo(0,0);
   if(cardNum) markVisited(cardNum);
-
-  document.getElementById('home-view').style.display = 'none';
-  var tv = document.getElementById('tool-view');
-  tv.style.display = 'flex';
-  document.getElementById('tool-title-text').textContent = title;
-  document.getElementById('loading-wrap').classList.add('show');
-
-  var frame = document.getElementById('tool-frame');
-  frame.src = '';
-  frame.onload = function(){
-    document.getElementById('loading-wrap').classList.remove('show');
-  };
-  frame.src = url;
+  loadVisited();
+  window.location.href = url;
 }
 
 function goHome(){
