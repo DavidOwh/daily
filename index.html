@@ -982,4 +982,13 @@ function openTool(url, title, cardNum){
 
 function goHome(){
   document.getElementById('tool-view').style.display = 'none';
-  document.getEle
+  document.getElementById('tool-frame').src = '';
+  document.getElementById('loading-wrap').classList.remove('show');
+  document.getElementById('home-view').style.display = 'block';
+  window.scrollTo(0,0);
+  loadVisited(); // refresh visited badges
+}
+</script>
+
+</body>
+</html>
