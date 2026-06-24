@@ -262,11 +262,65 @@ main{
 }
 .arrow{color:#d4a017;font-size:26px}
 
-/* ── CARDS ── */
+/* ── CARDS CAROUSEL ── */
+.cards-wrap{
+  position:relative;
+}
 .cards{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:18px;
+}
+/* carousel dots */
+.carousel-dots{
+  display:none;
+  justify-content:center;
+  gap:8px;
+  margin-top:16px;
+}
+.c-dot{
+  width:10px;height:10px;
+  border-radius:50%;
+  background:#ccc;
+  cursor:pointer;
+  transition:background .2s;
+}
+.c-dot.active{background:#123c5c}
+/* carousel arrows */
+.car-btn{
+  display:none;
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:#123c5c;
+  color:white;
+  border:none;
+  border-radius:50%;
+  width:44px;height:44px;
+  font-size:22px;
+  cursor:pointer;
+  z-index:10;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+  line-height:1;
+}
+.car-btn.left{left:-18px}
+.car-btn.right{right:-18px}
+@media(max-width:900px){
+  .cards{
+    display:flex;
+    overflow:hidden;
+    gap:0;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .card{
+    flex:0 0 100%;
+    scroll-snap-align:start;
+  }
+  .carousel-dots{display:flex}
+  .car-btn{display:flex}
 }
 .card{
   border-radius:25px;
@@ -624,7 +678,10 @@ footer{
         <span>📚 活出神的话</span>
       </div>
 
-      <div class="cards">
+      <div class="cards-wrap">
+      <button class="car-btn left" onclick="carMove(-1)" aria-label="上一个">&#8249;</button>
+      <button class="car-btn right" onclick="carMove(1)" aria-label="下一个">&#8250;</button>
+      <div class="cards" id="cards-track">
         <article class="card green" id="card-1">
           <div class="visited-badge">✓ 今天已打开</div>
           <div class="step">1</div>
@@ -675,7 +732,13 @@ footer{
           <button class="btn" onclick="openTool('https://bible.davidowh.com','📚 每日读经计划',3)">开始今天读经 →</button>
           <div class="tip">第三步：长期扎根神的话</div>
         </article>
+      </div><!-- end .cards -->
+      <div class="carousel-dots">
+        <div class="c-dot active" onclick="carGoTo(0)"></div>
+        <div class="c-dot" onclick="carGoTo(1)"></div>
+        <div class="c-dot" onclick="carGoTo(2)"></div>
       </div>
+    </div><!-- end .cards-wrap -->
     </section>
 
     <section class="two-col">
