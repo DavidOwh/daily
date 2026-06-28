@@ -31,6 +31,17 @@ main{margin-top:-34px;padding-bottom:48px}.panel{background:#fff;border-radius:2
 footer{background:var(--blue);color:#fff;text-align:center;padding:22px 16px;font-size:14px}
 @media(max-width:820px){.hero{padding:34px 16px 56px}main{margin-top:-30px}.steps,.info-grid{grid-template-columns:1fr}}
 @media(max-width:520px){.topbar{height:54px}.brand{font-size:19px}.hero{padding:30px 14px 50px}h1{font-size:38px}.subtitle{font-size:18px}.today{font-size:15px}.note{font-size:16px;padding:9px 13px}.panel{padding:20px 14px 18px;border-radius:22px}.section-title{font-size:24px}.card{min-height:auto;padding:17px 15px}}
+
+
+.share-section{background:#fff;border-radius:22px;padding:22px 18px;margin-top:20px;border:1px solid var(--line);box-shadow:0 10px 28px rgba(15,58,90,.08);text-align:center}
+.share-section h2{color:var(--blue);font-size:24px;font-weight:950;margin-bottom:6px}
+.share-section p{color:#475569;font-size:15.5px;margin-bottom:14px}
+.share-verse{background:#fffaf1;border-left:4px solid var(--gold);border-radius:14px;padding:12px 14px;color:#334155;font-size:15px;margin:0 auto 16px;max-width:680px}
+.share-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.share-btn{min-height:44px;padding:10px 18px;border-radius:999px;color:#fff;font-size:15px;font-weight:950;display:inline-flex;align-items:center;justify-content:center;border:0;cursor:pointer;font-family:inherit}
+.share-whatsapp{background:#1f9d55}.share-telegram{background:#2a8bdc}.share-copy{background:#0f3a5a}
+@media(max-width:520px){.share-section{padding:20px 14px}.share-buttons{flex-direction:column}.share-btn{width:100%}}
+
 </style>
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
@@ -49,7 +60,35 @@ footer{background:var(--blue);color:#fff;text-align:center;padding:22px 16px;fon
 <article class="card three"><div class="icon">📙</div><h2>每日读经计划</h2><p>按计划读经，建立持续亲近神的习惯。</p><div class="time">建议：10–15分钟</div><a class="btn" href="https://bible.davidowh.com" onclick="window.location.href='https://bible.davidowh.com'; return false;">开始读经 →</a></article>
 </div></section>
 <section class="info-grid"><article class="info"><strong>📖 今日金句</strong><p>你的话是我脚前的灯，是我路上的光。<br>诗篇 119:105</p></article><article class="info"><strong>🙏 今日祷告</strong><p>主啊，求祢打开我的眼睛，让我看见祢的话语，行在祢的道路上。阿们。</p></article><article class="info"><strong>👵 简单使用</strong><p>每天只要按顺序点击三个按钮，就可以开始今日灵修旅程。</p></article></section>
+
+<section class="share-section">
+  <h2>❤️ 分享给家人与朋友</h2>
+  <p>把这个灵修平台分享出去，一起每天听神的话、默想神的话、活出神的话。</p>
+  <div class="share-verse">“你的话是我脚前的灯，是我路上的光。”<br>—— 诗篇 119:105</div>
+  <div class="share-buttons">
+    <a class="share-btn share-whatsapp" href="https://wa.me/?text=%F0%9F%93%96%20%E6%88%91%E6%83%B3%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%AA%E6%AF%8F%E6%97%A5%E7%81%B5%E4%BF%AE%E5%B9%B3%E5%8F%B0%E7%BB%99%E4%BD%A0%EF%BC%9A%0A%0A%E3%80%8A%E6%AF%8F%E6%97%A5%E4%B8%8E%E4%B8%BB%E5%90%8C%E8%A1%8C%E3%80%8B%0A%0A%E5%8C%85%E5%90%AB%EF%BC%9A%0A%F0%9F%8E%A7%20%E6%AF%8F%E6%97%A5%E4%BA%B2%E8%BF%91%E7%A5%9E%0A%E2%9C%9D%EF%B8%8F%20%E4%B8%89%E7%82%B9%E7%81%B5%E4%BF%AE%E5%8A%A9%E6%89%8B%0A%F0%9F%93%96%20%E6%AF%8F%E6%97%A5%E8%AF%BB%E7%BB%8F%E8%AE%A1%E5%88%92%0A%0A%E6%84%BF%E6%88%91%E4%BB%AC%E4%B8%80%E8%B5%B7%E6%AF%8F%E5%A4%A9%E4%B8%8E%E4%B8%BB%E5%90%8C%E8%A1%8C%E3%80%82%0Ahttps%3A//daily.davidowh.com" target="_blank" rel="noopener">🟢 WhatsApp</a>
+    <a class="share-btn share-telegram" href="https://t.me/share/url?url=https%3A//daily.davidowh.com&text=%F0%9F%93%96%20%E6%AF%8F%E6%97%A5%E4%B8%8E%E4%B8%BB%E5%90%8C%E8%A1%8C%EF%BC%9A%E6%AF%8F%E6%97%A5%E4%BA%B2%E8%BF%91%E7%A5%9E%E3%80%81%E4%B8%89%E7%82%B9%E7%81%B5%E4%BF%AE%E5%8A%A9%E6%89%8B%E3%80%81%E6%AF%8F%E6%97%A5%E8%AF%BB%E7%BB%8F%E8%AE%A1%E5%88%92%E3%80%82" target="_blank" rel="noopener">🔵 Telegram</a>
+    <button class="share-btn share-copy" type="button" onclick="copyDailyWalkLink()">📋 复制链接</button>
+  </div>
+</section>
+
 <section class="faq"><h2 class="section-title">常见问题</h2><details open><summary>为什么没有前一天 / 后一天？</summary><p>首页只是入口，只显示今天。日期切换由每一个工具自己处理，避免日期不一致。</p></details><details><summary>我应该先用哪个？</summary><p>建议先使用「每日亲近神」，再使用「三点灵修助手」，最后进入「每日读经计划」。</p></details><details><summary>每天一定要全部完成吗？</summary><p>不一定。按自己的时间和情况进行即可。不求匆忙完成，只求真实亲近神。</p></details></section>
 </main><footer>© 2026 每日与主同行<br>愿主的话语天天激励你，与你同行。</footer>
 <script>(function(){const days=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];const d=new Date();document.getElementById("todayDate").textContent="今天是 "+d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日（"+days[d.getDay()]+"）";})();</script>
+
+<script>
+function copyDailyWalkLink(){
+  const text = "📖 每日与主同行\n\n🎧 每日亲近神\n✝️ 三点灵修助手\n📖 每日读经计划\n\n愿我们一起每天与主同行。\nhttps://daily.davidowh.com";
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){
+      alert("链接已经复制，可以贴到 WhatsApp 或 Telegram 分享。");
+    }).catch(function(){
+      prompt("请复制以下内容：", text);
+    });
+  }else{
+    prompt("请复制以下内容：", text);
+  }
+}
+</script>
+
 </body></html>
