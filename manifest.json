@@ -1,7 +1,6 @@
 {
   "name": "每日与主同行",
   "short_name": "每日与主同行",
-  "description": "每日亲近神、三点灵修分享、每日读经计划",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
